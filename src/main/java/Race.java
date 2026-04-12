@@ -2,45 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Race {
-    private List<RacingCar> racingCars;
-    private final RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
+    private final RacingCars racingCars;
+    private final NumberGenerator numberGenerator;
 
-    public Race(List<RacingCar> cars) {
-        this.racingCars = cars;
+    public Race(RacingCars racingCars, NumberGenerator numberGenerator) {
+        this.racingCars = racingCars;
+        this.numberGenerator = numberGenerator;
     }
 
-    public void start(int times) {
-        for (int i = 0; i < times; i++) {
-            moveCarsForward();
-        }
-    }
-
-    private void moveCarsForward() {
-        for (RacingCar racingCar : this.racingCars) {
-            racingCar.moveForward(this.randomNumberGenerator.generate());
+    public void play(int rounds) {
+        for (int i = 0; i < rounds; i++) {
+            racingCars.moveForward(numberGenerator);
         }
     }
 
     public List<RacingCar> findWinners() {
-        List<RacingCar> winners = new ArrayList<>();
-        int maxPosition = findMaxPosition();
-        for (RacingCar racingCar : this.racingCars) {
-            addWinner(winners, racingCar, maxPosition);
-        }
-        return winners;
-    }
-
-    private void addWinner(List<RacingCar> winners, RacingCar racingCar, int maxPosition) {
-        if (racingCar.getPosition() == maxPosition) {
-            winners.add(racingCar);
-        }
-    }
-
-    private int findMaxPosition() {
-        int maxPosition = 0;
-        for (RacingCar racingCar : this.racingCars) {
-            maxPosition = Math.max(maxPosition, racingCar.getPosition());
-        }
-        return maxPosition;
+        int maxPosition = racingCars.findMaxPosition();
+        return racingCars.findByPosition(maxPosition);
     }
 }
