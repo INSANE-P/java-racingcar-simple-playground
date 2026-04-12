@@ -1,8 +1,14 @@
-public class RandomNumberGenerator {
-    private static final int MIN_NUMBER = 0;
-    private static final int MAX_NUMBER = 9;
+public class RandomNumberGenerator implements NumberGenerator {
+    private final int min;
+    private final int max;
 
+    public RandomNumberGenerator(int min, int max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    @Override
     public int generate() {
-        return (int) (Math.random() * (MAX_NUMBER + 1) + MIN_NUMBER);
+        return (int) (Math.random() * (max - min + 1) + min);
     }
 }
