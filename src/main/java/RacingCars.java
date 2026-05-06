@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RacingCars {
     private final List<RacingCar> racingCars;
@@ -15,13 +16,9 @@ public class RacingCars {
     }
 
     public List<RacingCar> findByPosition(int position) {
-        List<RacingCar> cars = new ArrayList<>();
-        for (RacingCar racingCar : racingCars) {
-            if (racingCar.getPosition() == position) {
-                cars.add(racingCar);
-            }
-        }
-        return cars;
+        return racingCars.stream()
+                .filter(racingCar -> racingCar.getPosition() == position)
+                .toList();
     }
 
     public int findMaxPosition() {
